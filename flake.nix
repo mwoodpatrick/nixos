@@ -15,6 +15,9 @@
     # Declarative user-space dotfile profile management (Optional)
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Claude code
+    claude-code-nix.url = "github:sadjow/claude-code-nix";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-wsl, home-manager, ... }@inputs:

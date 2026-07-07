@@ -110,25 +110,27 @@
 
   # 5. Declarative User Space Neovim Management
   # Configures binary routing matching how platforms look up packages safely
+  # Currently not letting home manager not managing neovim since we use
+  # our own kickstart scripts
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-
-    # 1. CRITICAL FLIP: Tell Home Manager not to create an init.lua file
-    # This prevents Home Manager from creating symlinks over your files
-    # Safe null configuration bypass option matching new option standards
-    initLua = "";
-
-    # Injects system requirements matching language runtime dependencies
-    extraPackages = with pkgs; [
-      gcc               # C Compiler needed to assemble nvim-treesitter modules
-      gnumake           # Build automation engines
-      nodejs_22         # JS backend processing dependency engine
-    ];
-  };
+#  programs.neovim = {
+#    enable = true;
+#    viAlias = true;
+#    vimAlias = true;
+#    vimdiffAlias = true;
+#
+#    # 1. CRITICAL FLIP: Tell Home Manager not to create an init.lua file
+#    # This prevents Home Manager from creating symlinks over your files
+#    # Safe null configuration bypass option matching new option standards
+#    initLua = "";
+#
+#    # Injects system requirements matching language runtime dependencies
+#    extraPackages = with pkgs; [
+#      gcc               # C Compiler needed to assemble nvim-treesitter modules
+#      gnumake           # Build automation engines
+#      nodejs_22         # JS backend processing dependency engine
+#    ];
+#  };
 
   # 6. Environmental Handshakes
   # Explicitly forces system applications to look up Nix store symlinks smoothly
