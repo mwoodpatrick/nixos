@@ -6,9 +6,11 @@
 # https://github.com/nix-community/NixOS-WSL
 
 # access unstable packages via pkgs.pkgs-unstable
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 {
   # This populates variables globally across all login accounts & system services
+  # but only gets loaded in WSL on system start. Put most variables in .envrc or
+  # .bashrc
   environment.sessionVariables = {
     EDITOR="nvim";
     GIT_ROOT = "/mnt/wsl/projects/git";
@@ -42,10 +44,15 @@
     wget
     pkgs-unstable.neovim
     pkgs-unstable.ollama
+    inputs.claude-code-nix.packages.${pkgs.system}.default
   ];
 
   # Centralized tool management frameworks
   programs = {
+    # source .envrc files
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
+
     neovim = {
       enable = true;
       defaultEditor = true; # Automatically assigns $EDITOR and $VISUAL to nvim
@@ -68,7 +75,7 @@
         ".." = "cd ..";
         "nb" = "sudo nixos-rebuild boot";
         "ne" = "sudo nixos-rebuild edit";
-        "ns" = "sudo nixos-rebuild switch";
+        "ns" = "sudo nixos-rebuild switch --flake .#nixos";
       };
     };
   };
@@ -100,6 +107,9 @@
 
   #  Enable the Unfree licenses required for proprietary GPU acceleration hooks
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+  "claude-code"
+];
 
   # Enable the Ollama Service 
   # Enable the background daemon service
