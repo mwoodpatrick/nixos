@@ -31,6 +31,7 @@
     httpie 
     htop
     fortune
+    pyright
   ];
 
   # 3. Automated Git Architecture Configurations
