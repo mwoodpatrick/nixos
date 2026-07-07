@@ -12,6 +12,8 @@
   # but only gets loaded in WSL on system start. Put most variables in .envrc or
   # .bashrc
   environment.sessionVariables = {
+    ANTHROPIC_AUTH_TOKEN = "ollama";
+    ANTHROPIC_BASE_URL = "http://localhost:11434";
     EDITOR="nvim";
     GIT_ROOT = "/mnt/wsl/projects/git";
     # Inform your global login shells where to locate the user socket channel
